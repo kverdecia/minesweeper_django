@@ -1,0 +1,1 @@
+[{"model": "minesweeper.boardtemplate", "pk": 1, "fields": {"rows": 8, "columns": 8, "mines": 10}}, {"model": "minesweeper.boardtemplate", "pk": 2, "fields": {"rows": 16, "columns": 16, "mines": 40}}, {"model": "minesweeper.boardtemplate", "pk": 3, "fields": {"rows": 30, "columns": 16, "mines": 99}}]
