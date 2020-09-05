@@ -11,6 +11,7 @@ django-stubs = "*"
 django = "*"
 psycopg2-binary = "*"
 djangorestframework = "*"
+factory-boy = "*"
 
 [requires]
 python_version = "3.6"

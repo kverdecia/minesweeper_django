@@ -1,11 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""
-test_dj-webauthn
-------------
-
-Tests for `dj-webauthn` forms module.
-"""
 from django.test import TestCase
 
 from .. import minesweeper
