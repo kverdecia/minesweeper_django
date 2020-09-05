@@ -5,4 +5,6 @@ from . import api
 
 urlpatterns = [
     path('board-templates/', api.ListBoardTemplateView.as_view()),
+    path('boards/', api.ListCreateBoardView.as_view()),
+    path('boards/<int:pk>/', api.ReadDeleteBoardView.as_view())
 ]

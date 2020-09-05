@@ -6,4 +6,13 @@ from . import models
 class BoardTemplateSerializer(ModelSerializer):
     class Meta:
         model = models.BoardTemplate
-        fields = ('rows', 'columns', 'mines')
+        fields = ('id', 'rows', 'columns', 'mines')
+
+
+class BoardSerializer(ModelSerializer):
+    class Meta:
+        model = models.Board
+        fields = (
+            'id', 'rows', 'columns', 'mines', 'board_json', 'finished',
+            'user', 'created', 'modified'
+        )
