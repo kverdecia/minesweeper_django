@@ -31,6 +31,12 @@ class Board:
         mines: int
             Count of mines to places on the board.
         """
+        if not rows:
+            raise ValueError("row count cannot be empty")
+        if not columns:
+            raise ValueError("column count cannot be empty")
+        if not mines:
+            raise ValueError("mines count must not be empty")
         self.rows = rows
         self.columns = columns
         self.mines = mines
