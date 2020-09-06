@@ -59,11 +59,11 @@ class Board:
             self.board[row][col] = CellType.BOMB
 
     def __getitem__(self, cell_pos: Tuple[int, int]) -> CellType:
-        col, row = cell_pos
+        row, col = cell_pos
         return self.board[row][col]
 
     def __setitem__(self, cell_pos: Tuple[int, int], value: Union[int, CellType]):
-        col, row = cell_pos
+        row, col = cell_pos
         self.board[row][col] = value # type: ignore
 
     def _random_cell(self, omit: Set[Tuple[int, int]]) -> Tuple[int, int]:
@@ -124,3 +124,64 @@ class Board:
 
     def is_marked(self, row: int, column: int) -> bool:
         return self.is_type(row, column, CellType.FLAG) or self.is_type(row, column, CellType.QUESTION)
+
+    def has_bomb(self, row: int, column: int) -> bool:
+        return self.is_type(row, column, CellType.BOMB)
+
+    def is_revealed(self, row: int, column: int) -> bool:
+        return self.is_type(row, column, CellType.REVEALED)
+
+    def adjacent_cells(self, row: int, column: int, filter: Optional[Callable[[int, int], bool]] = None) -> List[Tuple[int, int]]:
+        diffs = [
+            (-1, -1), (-1, 0), (-1, 1),
+            (0, -1),           (0, 1),
+            (1, -1),  (1, 0),  (1, 1),
+        ]
+        if filter is None:
+            filter = lambda row, column: True
+        result = []
+        for diff_row, diff_col in diffs:
+            check_row = row + diff_row
+            check_col = column + diff_col
+            if check_row < 0 or check_col < 0 or check_row >= self.rows or check_col >= self.columns:
+                continue
+            if filter(check_row, check_col):
+                result.append((check_row, check_col))
+        return result
+
+    def adjacent_mines(self, row: int, column: int) -> List[Tuple[int, int]]:
+        "Returns the count of mines around the cell."
+        return self.adjacent_cells(row, column, self.has_bomb)
+
+    def adjacent_unmarked_mines(self, row: int, column: int) -> List[Tuple[int, int]]:
+        "Returns the count of mines around the cell."
+        is_unmarked_bomb = lambda row, column: self.has_bomb(row, column) and not self.is_marked(row, column)
+        return self.adjacent_cells(row, column, is_unmarked_bomb)
+
+    def revealable_neighbours(self, row: int, column: int) -> List[Tuple[int, int]]:
+        "Return the list of neighbours that can be revealed"
+        if not self.adjacent_unmarked_mines(row, column):
+            return self.adjacent_cells(row, column, self.is_empty)
+        return []
+
+    def reveal(self, row: int, column: int):
+        if self.is_type(row, column, CellType.FLAG|CellType.QUESTION|CellType.REVEALED|CellType.KABOOM):
+            return
+        if self.has_bomb(row, column):
+            self.add_type(row, column, CellType.KABOOM)
+            raise MineExplossionError((row, column))
+        if not self.is_empty(row, column):
+            raise ValueError(f"Wrong cell value in cell {row},{column}")
+
+        processed: Set[Tuple[int, int]] = set()
+        queue = [(row, column)]
+        while queue:
+            cell = queue.pop(0)
+            processed.add(cell)
+
+            if self.is_empty(*cell):
+                self.add_type(cell_type=CellType.REVEALED, *cell)
+
+                if not self.adjacent_mines(*cell):
+                    is_unprocessed = lambda *cell: cell not in processed
+                    queue.extend(self.adjacent_cells(filter=is_unprocessed, *cell))

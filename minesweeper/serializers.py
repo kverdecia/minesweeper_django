@@ -1,4 +1,6 @@
+from re import U
 from django.utils.translation import ugettext_lazy as _
+from django.db.models import TextChoices
 
 from rest_framework import serializers
 
@@ -20,12 +22,15 @@ class BoardSerializer(serializers.ModelSerializer):
         )
 
 
+class UpdateCellOperation(TextChoices):
+    MARK_CELL = 'mark_cell', _("Mark cell")
+    REVEAL_CELL = 'reveal_cell', _("Reveal cell")
+
+
 class UpdateCellSerializer(serializers.Serializer):
     row = serializers.IntegerField(write_only=True)
     column = serializers.IntegerField(write_only=True)
-    operation = serializers.ChoiceField(write_only=True, choices=[
-        ('mark_cell', _("Mark cell")),
-    ])
+    operation = serializers.ChoiceField(write_only=True, choices=UpdateCellOperation.choices)
 
     class Meta:
         model = models.Board
@@ -34,5 +39,8 @@ class UpdateCellSerializer(serializers.Serializer):
         )
 
     def update(self, instance: models.Board, validated_data):
-        instance.mark_cell(validated_data['row'], validated_data['column'])
+        if validated_data['operation'] == UpdateCellOperation.MARK_CELL:
+            instance.mark_cell(validated_data['row'], validated_data['column'])
+        elif validated_data['operation'] == UpdateCellOperation.REVEAL_CELL:
+            instance.reveal_cell(validated_data['row'], validated_data['column'])
         return instance

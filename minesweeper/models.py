@@ -49,3 +49,8 @@ class Board(BoardSize):
         board = self.get_minesweeper_board()
         board.mark_cell(row, column)
         self.save()
+
+    def reveal_cell(self, row: int, column: int):
+        board = self.get_minesweeper_board()
+        board.reveal(row, column)
+        self.save()
