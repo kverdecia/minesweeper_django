@@ -22,8 +22,12 @@ class ListCreateBoardView(generics.ListCreateAPIView):
         serializer.save(user=self.request.user)
 
 
-class ReadDeleteBoardView(generics.RetrieveDestroyAPIView):
-    serializer_class = serializers.BoardSerializer
-
+class ReadUpdateDeleteBoardView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         return models.Board.objects.filter(user=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PUT', 'PATCH']:
+            return serializers.UpdateCellSerializer
+        return serializers.BoardSerializer
+

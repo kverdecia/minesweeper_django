@@ -1,4 +1,6 @@
-from typing import Set, Tuple, Iterator, List, Optional
+
+import itertools
+from typing import Callable, Optional, Set, Tuple, Iterator, List, Any, Union, Iterable
 import random
 import enum
 
@@ -8,6 +10,18 @@ class CellType(enum.IntEnum):
     BOMB = 1
     FLAG = 2
     QUESTION = 4
+    REVEALED = 8
+    KABOOM = 16
+
+
+class CellOperation(enum.Enum):
+    REVEAL = 0
+    FLAG = 2
+    QUESTION = 4
+
+
+class MineExplossionError(Exception):
+    pass
 
 
 class Board:
@@ -16,7 +30,7 @@ class Board:
     rows: int
     columns: int
     mines: int
-    board: List[List[Optional[int]]]
+    board: List[List[CellType]]
 
     def __init__(self, rows: int, columns: int, mines: int):
         """
@@ -43,6 +57,14 @@ class Board:
         self.board = [[CellType.EMPTY]*columns for i in range(rows)]
         for row, col in self._random_cells():
             self.board[row][col] = CellType.BOMB
+
+    def __getitem__(self, cell_pos: Tuple[int, int]) -> CellType:
+        col, row = cell_pos
+        return self.board[row][col]
+
+    def __setitem__(self, cell_pos: Tuple[int, int], value: Union[int, CellType]):
+        col, row = cell_pos
+        self.board[row][col] = value # type: ignore
 
     def _random_cell(self, omit: Set[Tuple[int, int]]) -> Tuple[int, int]:
         """Returns a random cell coordinate that is not in in `omit`
@@ -77,3 +99,28 @@ class Board:
             cell = self._random_cell(omit)
             omit.add(cell)
             yield cell
+
+    def is_type(self, row: int, column: int, cell_type: Any) -> bool:
+        return bool(self[row, column] & cell_type)
+
+    def is_empty(self, row: int, column: int) -> bool:
+        "Returns if the cell is empty"
+        return self[row, column] == CellType.EMPTY
+
+    def add_type(self, row: int, column: int, cell_type: Any):
+        self[row, column] = self[row, column] | cell_type
+
+    def delete_type(self, row: int, column: int, cell_type: Any):
+        self[row, column] = (self[row, column] | cell_type ) ^ cell_type
+
+    def mark_cell(self, row: int, column: int):
+        if self.is_type(row, column, CellType.QUESTION):
+            self.delete_type(row, column, CellType.QUESTION)
+        elif self.is_type(row, column, CellType.FLAG):
+            self.delete_type(row, column, CellType.FLAG)
+            self.add_type(row, column, CellType.QUESTION)
+        else:
+            self.add_type(row, column, CellType.FLAG)
+
+    def is_marked(self, row: int, column: int) -> bool:
+        return self.is_type(row, column, CellType.FLAG) or self.is_type(row, column, CellType.QUESTION)
