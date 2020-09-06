@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from minesweeper.tests.factories import BoardModelFactory
+import copy
+
 from django.test import TestCase
 from django.db.utils import IntegrityError
 from django.db import transaction
@@ -103,6 +104,18 @@ class TestBoardModel(TestCase):
         self.assertFalse(board.is_marked(0, 0))
         board_model.mark_cell(0, 0)
         self.assertTrue(board.is_marked(0, 0))
+        # test the board model was saved
+        board_model2 = models.Board.objects.get(pk=board_model.pk)
+        self.assertEqual(board_model.board_json, board_model2.board_json)
+
+    def test_reveal_cell(self):
+        board_model: models.Board = factories.BoardModelFactory()
+        board: minesweeper.Board = board_model.get_minesweeper_board()
+        board_json = copy.deepcopy(board.board)
+        board_model.reveal_cell(0, 0)
+        self.assertEqual(board_model.board_json, board.board)
+        self.assertNotEqual(board_json, board.board)
+
         # test the board model was saved
         board_model2 = models.Board.objects.get(pk=board_model.pk)
         self.assertEqual(board_model.board_json, board_model2.board_json)
