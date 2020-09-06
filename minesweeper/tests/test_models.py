@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from minesweeper.tests.factories import BoardModelFactory
 from django.test import TestCase
 from django.db.utils import IntegrityError
 from django.db import transaction
@@ -80,3 +81,28 @@ class TestBoardModel(TestCase):
         self.assertEqual(mines, mines_count)
         # test all other cells are empty
         self.assertEqual(rows*cols-mines, empty_count)
+
+    def test_get_minesweeper_board(self):
+        board_model: models.Board = factories.BoardModelFactory()
+        board: minesweeper.Board = board_model.get_minesweeper_board()
+        self.assertIsInstance(board, minesweeper.Board)
+        self.assertEqual(board_model.rows, board.rows)
+        self.assertEqual(board_model.columns, board.columns)
+        self.assertEqual(board_model.mines, board.mines)
+        self.assertEqual(board_model.board_json, board.board)
+        self.assertIs(board_model.board_json, board.board)
+        # test that modify minesweeper board modifies board in model
+        self.assertFalse(board.is_marked(0, 0))
+        board.mark_cell(0, 0)
+        self.assertTrue(board.is_marked(0, 0))
+        self.assertEqual(board_model.board_json, board.board)
+
+    def test_mark_cell(self):
+        board_model: models.Board = factories.BoardModelFactory()
+        board: minesweeper.Board = board_model.get_minesweeper_board()
+        self.assertFalse(board.is_marked(0, 0))
+        board_model.mark_cell(0, 0)
+        self.assertTrue(board.is_marked(0, 0))
+        # test the board model was saved
+        board_model2 = models.Board.objects.get(pk=board_model.pk)
+        self.assertEqual(board_model.board_json, board_model2.board_json)

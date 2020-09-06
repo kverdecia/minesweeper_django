@@ -39,3 +39,13 @@ class Board(BoardSize):
             board = minesweeper.Board(self.rows, self.columns, self.mines)
             self.board_json = board.board
         return super().save(*args, **kwargs)
+
+    def get_minesweeper_board(self) -> minesweeper.Board:
+        board = minesweeper.Board(self.rows, self.columns, self.mines)
+        board.board = self.board_json
+        return board
+
+    def mark_cell(self, row: int, column: int):
+        board = self.get_minesweeper_board()
+        board.mark_cell(row, column)
+        self.save()
