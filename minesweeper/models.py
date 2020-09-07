@@ -33,6 +33,7 @@ class Board(BoardSize):
     class Meta:
         verbose_name = _("Board")
         verbose_name_plural = _("Boards")
+        ordering = ['-modified']
 
     def save(self, *args, **kwargs):
         if self.pk is None:
