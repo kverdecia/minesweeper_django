@@ -84,7 +84,7 @@ class Board:
         ValueError:
             If there are more cell in the `omit` set than the third of cells in the board.
         """
-        if len(omit) >= self.rows * self.columns / 3:
+        if len(omit) > self.rows * self.columns:
             raise ValueError("the omit set if full of mines.")
         result = (random.randint(0, self.rows-1), random.randint(0, self.columns-1))
         while result in omit:
