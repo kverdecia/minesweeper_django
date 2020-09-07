@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('minesweeper.apiurls')),
     path('', IndexView.as_view()),
-    path('<int:boardId>', IndexView.as_view())
+    path('<int:boardId>', IndexView.as_view()),
+    path('new', IndexView.as_view()),
 ]
