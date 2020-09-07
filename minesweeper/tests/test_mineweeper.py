@@ -124,6 +124,11 @@ class TestMineSweeper(TestCase):
         self.assertTrue(self.full_board.is_type(0, 0, CellType.BOMB))
         self.assertFalse(self.full_board.is_type(0, 0, CellType.FLAG))
         self.assertFalse(self.full_board.is_type(0, 0, CellType.QUESTION))
+        # when the cell is revealed the marks does nothing
+        self.full_board.add_type(0, 1, CellType.REVEALED)
+        old_value = self.full_board[0, 1]
+        self.full_board.mark_cell(0, 1)
+        self.assertEqual(self.full_board[0, 1], old_value)
 
     def test_is_marked(self):
         self.assertFalse(self.full_board.is_marked(0, 0))

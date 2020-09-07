@@ -114,6 +114,8 @@ class Board:
         self[row, column] = (self[row, column] | cell_type ) ^ cell_type
 
     def mark_cell(self, row: int, column: int):
+        if self.is_type(row, column, CellType.REVEALED):
+            return
         if self.is_type(row, column, CellType.QUESTION):
             self.delete_type(row, column, CellType.QUESTION)
         elif self.is_type(row, column, CellType.FLAG):
@@ -169,6 +171,7 @@ class Board:
             return
         if self.has_bomb(row, column):
             self.add_type(row, column, CellType.KABOOM)
+            self.add_type(row, column, CellType.REVEALED)
             raise MineExplossionError((row, column))
         if not self.is_empty(row, column):
             raise ValueError(f"Wrong cell value in cell {row},{column}")
@@ -195,6 +198,8 @@ class Board:
                     display_row.append('?')
                 elif self.is_type(row, col, CellType.FLAG):
                     display_row.append('!')
+                elif self.is_type(row, col, CellType.KABOOM):
+                    display_row.append('**')
                 elif self.is_type(row, col, CellType.REVEALED):
                     if self.is_type(row, col, CellType.KABOOM):
                         display_row.append('**')
