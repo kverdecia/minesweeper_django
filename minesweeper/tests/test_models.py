@@ -119,3 +119,21 @@ class TestBoardModel(TestCase):
         # test the board model was saved
         board_model2 = models.Board.objects.get(pk=board_model.pk)
         self.assertEqual(board_model.board_json, board_model2.board_json)
+
+    def test_reveal_cell_finished(self):
+        """test that when reveal a cell finish the board, the attribute `finished` in the model is set to `True`"""
+        # initialize the board
+        EMPTY = minesweeper.CellType.EMPTY
+        BOMB = minesweeper.CellType.BOMB
+        board_model: models.Board = models.Board.objects.create(
+            rows=3, columns=3, mines=1, user=self.user)
+        board_model.board_json = [
+            [EMPTY, EMPTY, EMPTY],
+            [EMPTY, EMPTY, EMPTY],
+            [EMPTY, EMPTY, BOMB],
+        ]
+        board_model.save()
+        #
+        board_model.reveal_cell(0, 0)
+        self.assertTrue(board_model.finished)
+
