@@ -1,0 +1,154 @@
+{% load static %}
+{% load react_bundle_loader %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="theme-color" content="#000000"/>
+    <meta name="description" content="MineSweeper game"/>
+    <title>{% block 'page-title' %}Mine Sweeper{% endblock 'page-title' %}</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
+
+    {% block 'header-media' %}
+    {% endblock 'header-media' %}
+</head>
+<body>
+
+    {% block 'content' %}
+    <div class="container">
+        {% block content %}
+        {% endblock content %}        
+    </div>
+    {% endblock 'content' %}
+
+
+    <script>!function(e){function r(r){for(var n,i,l=r[0],a=r[1],p=r[2],c=0,s=[];c<l.length;c++)i=l[c],Object.prototype.hasOwnProperty.call(o,i)&&o[i]&&s.push(o[i][0]),o[i]=0;for(n in a)Object.prototype.hasOwnProperty.call(a,n)&&(e[n]=a[n]);for(f&&f(r);s.length;)s.shift()();return u.push.apply(u,p||[]),t()}function t(){for(var e,r=0;r<u.length;r++){for(var t=u[r],n=!0,l=1;l<t.length;l++){var a=t[l];0!==o[a]&&(n=!1)}n&&(u.splice(r--,1),e=i(i.s=t[0]))}return e}var n={},o={1:0},u=[];function i(r){if(n[r])return n[r].exports;var t=n[r]={i:r,l:!1,exports:{}};return e[r].call(t.exports,t,t.exports,i),t.l=!0,t.exports}i.m=e,i.c=n,i.d=function(e,r,t){i.o(e,r)||Object.defineProperty(e,r,{enumerable:!0,get:t})},i.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},i.t=function(e,r){if(1&r&&(e=i(e)),8&r)return e;if(4&r&&"object"==typeof e&&e&&e.__esModule)return e;var t=Object.create(null);if(i.r(t),Object.defineProperty(t,"default",{enumerable:!0,value:e}),2&r&&"string"!=typeof e)for(var n in e)i.d(t,n,function(r){return e[r]}.bind(null,n));return t},i.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return i.d(r,"a",r),r},i.o=function(e,r){return Object.prototype.hasOwnProperty.call(e,r)},i.p="/";var l=this.webpackJsonpminesweeper_react=this.webpackJsonpminesweeper_react||[],a=l.push.bind(l);l.push=r,l=l.slice();for(var p=0;p<l.length;p++)r(l[p]);var f=a;t()}([])</script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% load static %}
+{% load bootstrap_pagination %}
+{% load django_bootstrap_breadcrumbs %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block 'page-title' %}Moto Autos{% endblock 'page-title' %}</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-68671744-6"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-68671744-6');
+    </script>
+    <script data-ad-client="ca-pub-8546523646854964" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    {% block 'header-media' %}
+    <link href="{% static 'img/ico-2.ico' %}" rel="shortcut icon" />
+    <!-- Bootstrap -->
+    <link href="{% static 'css/fuentes.css' %}" rel="stylesheet" type="text/css" />
+    <!-- dependencias Carousel 01 -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel-01.css' %}" media="all">
+    <!-- dependencias Carousel 01 -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/estilos.css' %}" rel="stylesheet">
+    <link href="{% static 'css/toastr.min.css' %}" rel="stylesheet">
+    {% endblock 'header-media' %}
+</head>
+<body>
+    {% block 'content-header' %}
+        {% include "vehicles/header.html" %}
+    {% endblock 'content-header' %}
+
+    {% block 'breadcrumbs' %}
+        {% breadcrumb_for 'index' %}
+            <i class="glyphicon glyphicon-home"></i>
+            Inicio
+        {% endbreadcrumb_for %}
+    {% endblock 'breadcrumbs' %}
+
+    {% block 'content' %}
+    <div class="container container-breadcrumbs">
+        {% render_breadcrumbs "django_bootstrap_breadcrumbs/bootstrap3.html" %}
+    </div>
+
+        <div class="container">
+            {% block content %}
+            {% endblock content %}        
+        </div>
+
+    {% endblock 'content' %}
+
+    {% block 'content-footer' %}
+        <footer class="container-fluid pie"></footer>
+    {% endblock 'content-footer' %}
+
+    <script type="text/javascript" src="{% static 'js/greensock.animation.js' %}"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/toastr.min.js' %}"></script>
+    {% if messages %}
+    <script>
+    setTimeout(function() {
+        {% for message in messages %}toastr["info"]("{{message}}");{% endfor %}
+    }, 500)
+    </script>
+    {% endif %}
+</body>
+</html> {% endcomment %}

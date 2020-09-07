@@ -13,6 +13,8 @@ psycopg2-binary = "*"
 djangorestframework = "*"
 factory-boy = "*"
 django-create-react-app = "*"
+django-allauth = "*"
+django-crispy-forms = "*"
 
 [requires]
 python_version = "3.6"

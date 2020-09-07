@@ -22,7 +22,8 @@ from minesweeper.views import IndexView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('minesweeper.apiurls')),
-    path('', IndexView.as_view()),
+    path('', IndexView.as_view(), name='index'),
     path('<int:boardId>', IndexView.as_view()),
     path('new', IndexView.as_view()),
+    path('accounts/', include('allauth.urls')),
 ]
