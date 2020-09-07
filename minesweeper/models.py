@@ -31,7 +31,6 @@ class Board(BoardSize):
     modified = models.DateTimeField(_("Modified"), auto_now=True)
 
     class Meta:
-        unique_together = [('rows', 'columns', 'mines')]
         verbose_name = _("Board")
         verbose_name_plural = _("Boards")
 
