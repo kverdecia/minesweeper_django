@@ -123,7 +123,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / '../minesweeper_static'
 STATICFILES_DIRS = [
-    BASE_DIR / '../minesweeper_react/build/static',
+    BASE_DIR / 'minesweeper_react/static',
 ]
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -133,7 +133,7 @@ STATICFILES_FINDERS = [
 
 CREATE_REACT_APP = {
     'DEFAULT': {
-        'BUNDLE_DIR_NAME': BASE_DIR / '../minesweeper_react/build/',
+        'BUNDLE_DIR_NAME': BASE_DIR / 'minesweeper_react',
         'FRONT_END_SERVER': "http://localhost:3000/",
         'is_dev': False,
     }
