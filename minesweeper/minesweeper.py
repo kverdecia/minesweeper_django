@@ -166,12 +166,26 @@ class Board:
             return self.adjacent_cells(row, column, self.is_empty)
         return []
 
+    def is_finished(self):
+        revealed = 0
+        for row in range(self.rows):
+            for column in range(self.columns):
+                if not self.has_bomb(row, column) and self.is_revealed(row, column):
+                    revealed += 1
+        return revealed + self.mines == self.rows * self.columns
+
+    def reveal_board(self):
+        for row in range(self.rows):
+            for column in range(self.columns):
+                self.add_type(row, column, CellType.REVEALED)
+
     def reveal(self, row: int, column: int):
         if self.is_type(row, column, CellType.FLAG|CellType.QUESTION|CellType.REVEALED|CellType.KABOOM):
             return
         if self.has_bomb(row, column):
             self.add_type(row, column, CellType.KABOOM)
             self.add_type(row, column, CellType.REVEALED)
+            self.reveal_board()
             raise MineExplossionError((row, column))
         if not self.is_empty(row, column):
             raise ValueError(f"Wrong cell value in cell {row},{column}")
@@ -188,6 +202,8 @@ class Board:
                 if not self.adjacent_mines(*cell):
                     is_unprocessed = lambda *cell: cell not in processed
                     queue.extend(self.adjacent_cells(filter=is_unprocessed, *cell))
+        if self.is_finished():
+            self.reveal_board()
 
     def get_display_board(self):
         result = []
