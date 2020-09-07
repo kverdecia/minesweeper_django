@@ -35,7 +35,13 @@ class UpdateCellSerializer(serializers.Serializer):
     class Meta:
         model = models.Board
         fields = (
+            'id', 'rows', 'columns', 'mines', 'board_json', 'finished',
+            'user', 'created', 'modified'
             'row', 'column', 'operation',
+        )
+        read_only_fields = (
+            'id', 'rows', 'columns', 'mines', 'board_json', 'finished',
+            'user', 'created', 'modified'
         )
 
     def update(self, instance: models.Board, validated_data):
@@ -43,4 +49,5 @@ class UpdateCellSerializer(serializers.Serializer):
             instance.mark_cell(validated_data['row'], validated_data['column'])
         elif validated_data['operation'] == UpdateCellOperation.REVEAL_CELL:
             instance.reveal_cell(validated_data['row'], validated_data['column'])
+        self._data = BoardSerializer(instance).data
         return instance
