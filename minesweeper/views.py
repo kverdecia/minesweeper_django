@@ -1,3 +1,6 @@
-from django.shortcuts import render
+from django.template.base import Template
+from django.views.generic import TemplateView
 
-# Create your views here.
+
+class IndexView(TemplateView):
+    template_name = 'minesweeper/index.html'
