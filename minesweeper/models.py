@@ -55,6 +55,8 @@ class Board(BoardSize):
         board = self.get_minesweeper_board()
         try:
             board.reveal(row, column)
+            if board.is_finished():
+                self.finished = True
         except minesweeper.MineExplossionError:
             self.finished = True
         self.save()
