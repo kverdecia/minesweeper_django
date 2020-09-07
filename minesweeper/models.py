@@ -53,7 +53,10 @@ class Board(BoardSize):
 
     def reveal_cell(self, row: int, column: int):
         board = self.get_minesweeper_board()
-        board.reveal(row, column)
+        try:
+            board.reveal(row, column)
+        except minesweeper.MineExplossionError:
+            self.finished = True
         self.save()
 
     def display_board(self) -> List[List[str]]:
