@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'cuic&h2fhy2fhbgfa)r0blotwe8@ik*3_hu^+j2s!4kbp-0r&w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'create_react_app',
     'minesweeper',
 ]
 
@@ -120,6 +121,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / '../minesweeper_static'
+STATICFILES_DIRS = [
+    BASE_DIR / '../minesweeper_react/build/static',
+]
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
+
+CREATE_REACT_APP = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': BASE_DIR / '../minesweeper_react/build/',
+        'FRONT_END_SERVER': "http://localhost:3000/",
+        'is_dev': False,
+    }
+}
+
 
 
 try:

@@ -16,7 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from minesweeper.views import IndexView
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/', include('minesweeper.apiurls'))
+    path('api/v1/', include('minesweeper.apiurls')),
+    path('', IndexView.as_view()),
+    path('<int:boardId>', IndexView.as_view())
 ]
