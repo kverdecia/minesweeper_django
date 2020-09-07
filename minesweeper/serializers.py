@@ -17,8 +17,8 @@ class BoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Board
         fields = (
-            'id', 'rows', 'columns', 'mines', 'board_json', 'finished',
-            'user', 'created', 'modified'
+            'id', 'rows', 'columns', 'mines', 'finished',
+            'user', 'created', 'modified', 'display_board'
         )
 
 
