@@ -185,3 +185,25 @@ class Board:
                 if not self.adjacent_mines(*cell):
                     is_unprocessed = lambda *cell: cell not in processed
                     queue.extend(self.adjacent_cells(filter=is_unprocessed, *cell))
+
+    def get_display_board(self):
+        result = []
+        for row, row_cells in enumerate(self.board):
+            display_row = []
+            for col, value in enumerate(row_cells):
+                if self.is_type(row, col, CellType.QUESTION):
+                    display_row.append('?')
+                elif self.is_type(row, col, CellType.FLAG):
+                    display_row.append('!')
+                elif self.is_type(row, col, CellType.REVEALED):
+                    if self.is_type(row, col, CellType.KABOOM):
+                        display_row.append('**')
+                    if self.is_type(row, col, CellType.BOMB):
+                        display_row.append('*')
+                    else:
+                        mines_count = len(self.adjacent_mines(row, col))
+                        display_row.append(str(mines_count))
+                else:
+                    display_row.append(' ')
+            result.append(display_row)
+        return result

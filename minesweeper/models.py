@@ -1,3 +1,4 @@
+from typing import List
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
@@ -54,3 +55,7 @@ class Board(BoardSize):
         board = self.get_minesweeper_board()
         board.reveal(row, column)
         self.save()
+
+    def display_board(self) -> List[List[str]]:
+        board = self.get_minesweeper_board()
+        return board.get_display_board()
