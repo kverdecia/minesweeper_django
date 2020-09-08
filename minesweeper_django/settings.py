@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'crispy_forms',
     'allauth.socialaccount',
+    'drf_yasg',
     'minesweeper',
     'registration'
 ]

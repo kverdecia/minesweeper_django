@@ -33,6 +33,13 @@ TODO: Timetracking
 
 NOTE: Right now you can only use basic authentication to call the endpoints.
 
+You can access to the api documentation in this urls:
+
+* /swagger.yaml
+* /swagger.json
+* /swagger/
+* /redoc/
+
 ## Models
 
 The model Board in the minesweeper application provides the storage and logic to play with a mine sweeper board. To create an instance of this model class you have to pass the rows, columns and mines count and it will generate a random board. Then you can use the methods:
