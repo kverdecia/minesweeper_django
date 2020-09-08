@@ -1,8 +1,12 @@
 from django.db.models import query
+from django.utils.decorators import method_decorator
+from requests.api import put
 
 from rest_framework.serializers import ModelSerializer
 from rest_framework import generics
 from rest_framework.authentication import SessionAuthentication as BaseSessionAuthentication, BasicAuthentication
+
+from drf_yasg.utils import swagger_auto_schema
 
 from . import models
 from . import serializers
@@ -40,3 +44,10 @@ class ReadUpdateDeleteBoardView(generics.RetrieveUpdateDestroyAPIView):
             return serializers.UpdateCellSerializer
         return serializers.BoardSerializer
 
+    @swagger_auto_schema(auto_schema=None)
+    def patch(self, request, *args, **kwargs):
+        return super().patch(request, *args, **kwargs)
+
+    @swagger_auto_schema(responses={200: serializers.BoardSerializer})
+    def put(self, request, *args, **kwargs):
+        return super().put(request, *args, **kwargs)
